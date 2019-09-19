@@ -18,14 +18,14 @@ const UpdateForm = props => {
   const { match, movies } = props;
   console.log(match, movies);
   const id = match.params.id;
-  console.log(id);
-  const movieToUpdate = movies.find( function(movie) {return movie.id == id});
-  console.log(movieToUpdate);
+//   console.log(id);
+//   const movieToUpdate = movies.find( function(movie) {return movie.id == id});
+//   console.log(movieToUpdate);
   
   useEffect(() => {
-    // const id = match.params.id;
-    // const movieToUpdate = movies.find( movie => movie.id == id );
-    // console.log(movieToUpdate);
+    const id = match.params.id;
+    const movieToUpdate = movies.find( movie => movie.id == id );
+    console.log(movieToUpdate);
     
     if (movieToUpdate) {
       console.log(movieToUpdate);
@@ -52,10 +52,14 @@ const UpdateForm = props => {
   const handleSubmit = e => {
     e.preventDefault();
     console.log(movie);
+    console.log(props);
     axios
       .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
       .then(res => {
-        props.updateMovies(res.data);
+        props.updateMovies([...movies, res.data]);
+        console.log([...movies, res.data])
+        console.log(res.data);
+        console.log(props);
         props.history.push(`/movies/${movie.id}`);
         setMovie(initialMovie);
       })
