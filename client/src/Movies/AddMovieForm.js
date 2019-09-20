@@ -9,29 +9,14 @@ const initialMovie = {
   stars: []
 };
 
-const UpdateForm = props => {
+const AddMovieForm = props => {
     
     console.log(props);
 
   const [movie, setMovie] = useState(initialMovie);
 
-  const { match, movies } = props;
-  console.log(match, movies);
-  const id = match.params.id;
-//   console.log(id);
-//   const movieToUpdate = movies.find( function(movie) {return movie.id == id});
-//   console.log(movieToUpdate);
-  
-  useEffect(() => {
-    const id = match.params.id;
-    const movieToUpdate = movies.find( movie => movie.id == id );
-    console.log(movieToUpdate);
-    
-    if (movieToUpdate) {
-      console.log(movieToUpdate);
-      setMovie(movieToUpdate);
-    }
-  }, [match, movies]);
+  const { movies } = props;
+
 
   const changeHandler = e => {
     e.persist();
@@ -40,11 +25,12 @@ const UpdateForm = props => {
       value = parseInt(value, 10);
     }
     if (e.target.name === 'stars') {
-        value = value.split(", ");
+        value = value.split(",");
     }
 
     setMovie({
       ...movie,
+      id:movies.length,
       [e.target.name]: value
     });
   };
@@ -53,14 +39,14 @@ const UpdateForm = props => {
     e.preventDefault();
     console.log(movie);
     console.log(props);
+    
     axios
-      .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
+      .post(`http://localhost:5000/api/movies`, movie)
       .then(res => {
-        props.updateMovies([...movies, res.data]);
-        console.log([...movies, res.data])
-        console.log(res.data);
+        props.updateMovies(res.data);
+        console.log(res.data)
         console.log(props);
-        props.history.push(`/movies/${movie.id}`);
+        props.history.push(`/`);
         setMovie(initialMovie);
       })
       .catch(err => console.log(err.response));
@@ -68,9 +54,7 @@ const UpdateForm = props => {
 
   return (
       <form onSubmit={handleSubmit}>
-        
-        <h2>Update Movie</h2>
-
+       <h2>Add Movie</h2> 
         <input
           type="text"
           name="title"
@@ -102,7 +86,7 @@ const UpdateForm = props => {
           type="string"
           name="stars"
           onChange={changeHandler}
-          placeholder="Actor 1,Actor 2, ..."
+          placeholder="Actor 1, Actor 2, ..."
           value={movie.stars}
         />
         <div className="baseline" />
@@ -112,4 +96,4 @@ const UpdateForm = props => {
   );
 };
 
-export default UpdateForm;
+export default AddMovieForm;
