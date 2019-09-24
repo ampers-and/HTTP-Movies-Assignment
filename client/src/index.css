@@ -75,3 +75,58 @@ body {
   color: red;
   text-align: center;
 }
+
+.update-button {
+  position: absolute;
+  top: 60px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+}
+.update-button:hover {
+  background-color: green;
+  color: white;
+}
+
+.delete-button {
+  position: absolute;
+  top: 95px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+}
+.delete-button:hover {
+  background-color: green;
+  color: white;
+}
+
+a{
+  text-decoration: none;
+  color:inherit;
+}
+
+form{
+  width:fit-content;
+  margin:auto;
+  display: flex;
+  flex-direction: column;
+}
+
+form input{
+  margin:7px;
+  padding:5px;
+  font-size: 16px;
+}
+
+form button{
+  padding: 7px;
+  background-color: lightskyblue;
+  margin:7px auto;
+  font-size: 16px;
+}
+
+form h2{
+  margin:.83em auto;
+}
